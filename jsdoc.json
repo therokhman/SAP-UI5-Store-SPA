@@ -1,0 +1,10 @@
+{
+    "source": {
+        "include": ["./webapp", "./webapp/controller", "./webapp/model"],
+        "includePattern": ".js$",
+        "exclude": ["./.git", "./README.md", "./.vscode", "./node_modules", "./ui5-local.yaml", "./ui5.yaml"]
+    },
+    "opts": {
+        "destination": "./docs"
+    }
+}

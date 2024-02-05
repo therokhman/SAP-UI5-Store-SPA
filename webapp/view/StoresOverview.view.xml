@@ -1,0 +1,51 @@
+<mvc:View 
+    controllerName="aliaksei.rakhmanko.controller.StoresOverview"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true">
+        <f:DynamicPage id="StoresOverviewPageId" class="sapUiNoContentPadding" showFooter="true">
+            <f:title>
+                <f:DynamicPageTitle>
+                    <f:heading>
+                        <Title text="{i18n>storesOverviewTitle}" />
+                    </f:heading>
+                    <f:breadcrumbs>
+                        <Breadcrumbs separatorStyle="{/selected}">
+                            <Link text="{i18n>storesOverviewBreadcrumb}"/>
+                        </Breadcrumbs>
+                    </f:breadcrumbs>
+                </f:DynamicPageTitle>
+            </f:title>
+            <f:header>
+                <f:DynamicPageHeader pinnable="true">
+                    <SearchField 
+                        search=".onStoreSearch"
+                        placeholder="{i18n>storesOverviewSearchPlaceholder}"
+                        width="100%"/>
+                </f:DynamicPageHeader>
+            </f:header>
+            <f:content>
+                <List items="{/Stores}" id="storesListId">
+                    <items>
+                        <ObjectListItem 
+                            title="{Name}"
+                            type="Active"
+                            number="{FloorArea}"
+                            numberUnit="{i18n>storesOverviewNumberUnitProperty}"
+                            press="onNavToStoreDetails">
+                            <attributes>
+                                <ObjectAttribute text="{Address}"/>
+                            </attributes>
+                        </ObjectListItem>
+                    </items>
+                </List>
+            </f:content>
+            <f:footer>
+                <OverflowToolbar>
+                    <ToolbarSpacer/>
+                    <Button icon="sap-icon://add" text="{i18n>storesOverviewCreateStoreButton}" press="onOpenCreateStoreDialog"></Button>
+                </OverflowToolbar>
+            </f:footer>
+        </f:DynamicPage>
+</mvc:View>

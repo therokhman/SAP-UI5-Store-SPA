@@ -1,0 +1,126 @@
+<mvc:View 
+    controllerName="aliaksei.rakhmanko.controller.ProductDetails"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+	xmlns:l="sap.ui.layout"
+    displayBlock="true">
+
+    <f:DynamicPage id="productDetailsId" class="sapUiNoContentPadding" showFooter="true">
+        <f:title>
+            <f:DynamicPageTitle>
+				<f:heading>
+					<Title text="{
+						path: 'Name',
+						formatter: '.formatter.formatProductTitle'}"/>
+				</f:heading>
+				<f:breadcrumbs>
+					<Breadcrumbs currentLocationText="{i18n>productDetailsBreadcrumb}" separatorStyle="{/selected}">
+						<Link press="onNavToStoresOverview" text="{i18n>storesOverviewBreadcrumb}"/>
+						<Link press="onNavToStoreDetails" text="{i18n>storeDetailsBreadcrumb}"/>
+					</Breadcrumbs>
+				</f:breadcrumbs>
+			</f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <l:VerticalLayout class="sapUiNoContentPadding">
+                    <l:HorizontalLayout class="sapUiTinyMarginBottom" allowWrapping="true">
+                        <l:VerticalLayout class="sapUiNoContentPadding sapUiSmallMarginEnd">
+							<l:HorizontalLayout class="sapUiNoContentPadding">
+								<Label text="{i18n>productDetailsPriceLabel}" design="Bold" class="sapUiTinyMarginEnd" showColon="true"/>
+								<ObjectNumber number="{Price}" unit="USD"/>
+							</l:HorizontalLayout>
+							<l:HorizontalLayout class="sapUiNoContentPadding" >
+								<Label text="{i18n>productDetailsRatingLabel}" design="Bold" class="sapUiTinyMarginEnd" showColon="true"/>
+								<Text text="{Rating}"/>
+							</l:HorizontalLayout>
+						</l:VerticalLayout>
+						<l:HorizontalLayout allowWrapping="true">
+							<l:VerticalLayout>
+								<l:HorizontalLayout class="sapUiNoContentPadding" >
+									<Label text="{i18n>productDetailsDateLabel}" design="Bold" class="sapUiTinyMarginEnd" showColon="true"/>
+									<Text text="" />
+								</l:HorizontalLayout>
+								<l:HorizontalLayout class="sapUiNoContentPadding" >
+									<Label text="{i18n>productDetailsMadeInLabel}" design="Bold" class="sapUiTinyMarginEnd" showColon="true"/>
+									<Text text="{MadeIn}" class="sapUiTinyMarginEnd"/>
+								</l:HorizontalLayout>
+							</l:VerticalLayout>
+							<l:VerticalLayout>
+								<l:HorizontalLayout class="sapUiNoContentPadding">
+									<Label text="{i18n>productDetailsProdCompNameLabel}" design="Bold" class="sapUiTinyMarginEnd" showColon="true"/>
+									<Text text="{ProductionCompanyName}" class="sapUiTinyMarginEnd"/>
+								</l:HorizontalLayout>
+								<l:HorizontalLayout class="sapUiNoContentPadding" >
+									<Label text="{i18n>productDetailsStatusLabel}" design="Bold" class="sapUiTinyMarginEnd" showColon="true"/>
+									<ObjectStatus
+										class="sapUiSmallMarginBottom"
+										text="{Status}"
+										inverted="true"
+										state="{
+											path:'Status',
+											formatter: '.formatter.statusColor'
+										}"/>
+								</l:HorizontalLayout>
+							</l:VerticalLayout>
+						</l:HorizontalLayout>
+                    </l:HorizontalLayout>
+                    <l:HorizontalLayout class="sapUiNoContentPadding">
+                        <Label text="{i18n>productDetailsSpecsLabel}" design="Bold" class="sapUiTinyMarginEnd" showColon="true"/>
+						<Text text="{Specs}" maxLines="4" wrapping="true"/>
+                    </l:HorizontalLayout>
+                    <l:HorizontalLayout class="sapUiNoContentPadding">
+                        <Label text="{i18n>productDetailsSupplierInfoLabel}" design="Bold" class="sapUiTinyMarginEnd" showColon="true"/>
+						<Text text="{SupplierInfo}" maxLines="4" wrapping="true"/>
+                    </l:HorizontalLayout>
+                </l:VerticalLayout>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <Panel>
+                <FlexBox
+					height="100px"
+					alignItems="Center"
+					justifyContent="Start">
+					<items>
+						<Label text="{i18n>productDetailsAuthorNameLabel}" showColon="true" class="sapUiSmallMarginEnd" labelFor="authorInput"/>
+						<Input
+							id="authorInput"
+							type="Text"
+							placeholder="{i18n>productDetailsAuthorInputPlaceholder}"
+							showSuggestion="true"
+							width="110%">
+						</Input>
+						<Label text="{i18n>productDetailsRatingLabel}" showColon="true" class="sapUiMediumMarginBeginEnd" labelFor="ratingInput"/>
+						<RatingIndicator id="ratingInput"
+							maxValue="5"
+							class="sapUiSmallMarginBottom"
+							value="0"
+							tooltip="Rating Tooltip"/>
+					</items>
+				</FlexBox>
+                <FeedInput
+					post="onPostComment"
+					showIcon="true" 
+					placeholder="{i18n>productDetailsFeedInputPlaceholder}"/>
+                <List
+					id="commentsListId"
+					showSeparators="Inner"
+					items="{/ProductComments}" >
+					<FeedListItem
+						sender="{Author}"
+						info="{
+							path: 'Rating',
+							formatter: '.formatter.formatRating'
+							}"
+						timestamp="{
+							path: 'Posted',
+							formatter: '.formatter.formatDate'}"
+						text="{Message}"
+						convertLinksToAnchorTags="All"/>
+				</List>
+            </Panel>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

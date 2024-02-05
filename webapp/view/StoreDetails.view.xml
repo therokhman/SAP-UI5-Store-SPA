@@ -1,0 +1,229 @@
+<mvc:View 
+    controllerName="aliaksei.rakhmanko.controller.StoreDetails"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    displayBlock="true">
+
+    <f:DynamicPage id="storeDetailsId" showFooter="true" class="sapUiNoContentPadding">
+        <f:title>
+            <f:DynamicPageTitle >
+                <f:heading>
+					<Title text="{i18n>storeDetailsTitle}"/>
+				</f:heading>
+				<f:breadcrumbs>
+					<Breadcrumbs currentLocationText="{i18n>storeDetailsBreadcrumb}" separatorStyle="{/selected}">
+						<Link press="onNavToStoresOverview" text="{i18n>storesOverviewBreadcrumb}"/>
+					</Breadcrumbs>
+				</f:breadcrumbs>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <l:HorizontalLayout class="sapUiNoContentPadding" allowWrapping="true">
+                    <l:VerticalLayout class="sapUiLargeMarginEnd">
+                        <l:HorizontalLayout class="sapUiNoContentPadding">
+                            <Label text="{i18n>storeDetailsEmailLabel}" design="Bold" class="sapUiTinyMarginEnd" showColon="true"/>
+							<Text text="{Email}"/>
+                        </l:HorizontalLayout>
+                        <l:HorizontalLayout class="sapUiNoContentPadding">
+                            <Label text="{i18n>storeDetailsPhoneNumberLabel}" design="Bold" class="sapUiTinyMarginEnd" showColon="true"/>
+							<Text text="{PhoneNumber}"/>
+                        </l:HorizontalLayout>
+                        <l:HorizontalLayout class="sapUiNoContentPadding">
+                            <Label text="{i18n>storeDetailsAddressLabel}" design="Bold" class="sapUiTinyMarginEnd" showColon="true"/>
+							<Text text="{Address}"/>
+                        </l:HorizontalLayout>
+                    </l:VerticalLayout>
+                    <l:VerticalLayout>
+                        <l:HorizontalLayout class="sapUiNoContentPadding">
+                            <Label text="{i18n>storeDetailsEstablishedDateLabel}" design="Bold" class="sapUiTinyMarginEnd" showColon="true"/>
+							<Text text="{
+								path: 'Established',
+								constraints: {
+									displayFormat: 'Date'},
+								type: 'sap.ui.model.odata.type.DateTime'}"/>
+                        </l:HorizontalLayout>
+                        <l:HorizontalLayout class="sapUiNoContentPadding">
+                            <Label text="{i18n>storeDetailsFloorAreaLabel}" design="Bold" class="sapUiTinyMarginEnd" showColon="true"/>
+							<Text text="{FloorArea}"/>
+                        </l:HorizontalLayout>
+                    </l:VerticalLayout>
+                </l:HorizontalLayout>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <IconTabBar
+                id="iconTabBarId"
+				select="onFilterProductsByStatus"
+                class="sapUiResponsiveContentPadding">
+                <items>
+                    <IconTabFilter
+							showAll="true"
+							text="{i18n>storeDetailFilterAll}"
+							count="{viewModel>/statuses/all}"
+							key="ALL" />
+						<IconTabSeparator />
+						<IconTabFilter
+							icon="sap-icon://message-success"
+							iconColor="Positive"
+							text="{i18n>storeDetailFilterOK}"
+							count="{viewModel>/statuses/OK}"
+							key="OK" />
+						<IconTabFilter
+							icon="sap-icon://message-warning"
+							iconColor="Critical"
+							text="{i18n>storeDetailFilterStorage}"
+							count="{viewModel>/statuses/STORAGE}"
+							key="STORAGE" />
+						<IconTabFilter
+							icon="sap-icon://high-priority" 
+							iconColor="Negative"
+							text="{i18n>storeDetailFilterOut}"
+							count="{viewModel>/statuses/OUT_OF_STOCK}"
+							key="OUT_OF_STOCK" />
+                </items>
+                <content>
+                    <Table id="productsTableId"
+						autoPopinMode="true"
+						sticky="HeaderToolbar,ColumnHeaders"
+                        items="{path: 'rel_Products',
+						events: {
+							dataReceived: '.getStatuses'
+						}}"
+						>
+                        <headerToolbar>
+                            <OverflowToolbar>
+								<content>
+									<Title text="{i18n>storeDetailsTableHeaderTitle}" level="H2"/>
+									<ToolbarSpacer/>
+									<SearchField
+										id="searchInputId"
+										width="20%"
+										search=".onTableSearch"
+										placeholder="{i18n>storeDetailsSearchPlaceholder}"/>
+								</content>
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column id="productCol" width="12em" hAlign="Begin" importance="High">           
+								<HBox alignItems="Center"
+									justifyContent="Center">
+									<Button 
+										icon="sap-icon://sort"
+										app:columnNameData="Name"
+										id="Name"
+										type="Transparent"
+										press="onSortButtonPress"/>
+									<Text text="{i18n>storeDetailsColumnHeaderName}"/>
+								</HBox>
+							</Column>
+                            <Column id="price" hAlign="End" demandPopin="true" importance="Low">
+								<HBox alignItems="Center"
+									justifyContent="Center">
+									<Button 
+										icon="sap-icon://sort"
+										app:columnNameData="Price"
+										id="Price"
+										type="Transparent"
+										press="onSortButtonPress"/>
+									<Text text="{i18n>storeDetailsColumnHeaderPrice}"/>
+								</HBox>
+							</Column>
+                            <Column id="specs" hAlign="Center" demandPopin="true" importance="Medium">
+								<HBox alignItems="Center"
+									justifyContent="Center">
+									<Button
+										icon="sap-icon://sort"
+										app:columnNameData="Specs"
+										id="Specs"
+										type="Transparent"
+										press="onSortButtonPress"/>
+									<Text text="{i18n>storeDetailsColumnHeaderSpecs}"/>
+								</HBox>
+							</Column>
+                            <Column id="supplierinfo" demandPopin="true" importance="Medium">
+								<HBox alignItems="Center"
+									justifyContent="Center">
+									<Button
+										icon="sap-icon://sort"
+										app:columnNameData="SupplierInfo"
+										id="SupplierInfo"
+										type="Transparent"
+										press="onSortButtonPress"/>
+									<Text text="{i18n>storeDetailsColumnHeaderSupplierInfo}"/>
+								</HBox>
+							</Column>
+                            <Column id="countryoforigin" demandPopin="true" importance="Low">
+								<HBox alignItems="Center"
+									justifyContent="Center">
+									<Button
+										icon="sap-icon://sort"
+										app:columnNameData="MadeIn"
+										id="MadeIn"
+										type="Transparent"
+										press="onSortButtonPress"/>
+									<Text text="{i18n>storeDetailsColumnHeaderCountryOfOrigin}"/>
+								</HBox>
+							</Column>
+                            <Column id="company" demandPopin="true" importance="Low">
+								<HBox alignItems="Center"
+									justifyContent="Center">
+									<Button
+										icon="sap-icon://sort"
+										app:columnNameData="ProductionCompanyName"
+										id="ProductionCompanyName"
+										type="Transparent"
+										press="onSortButtonPress"/>
+									<Text text="{i18n>storeDetailsColumnHeaderProdCompany}"/>
+								</HBox>
+							</Column>
+                            <Column id="rating" demandPopin="true" minScreenWidth="" importance="Low">
+								<HBox alignItems="Center"
+									justifyContent="Center">
+									<Button
+										icon="sap-icon://sort"
+										app:columnNameData="Rating"
+										id="Rating"
+										type="Transparent"
+										press="onSortButtonPress"/>
+									<Text text="{i18n>storeDetailsColumnHeaderRating}"/>
+								</HBox>
+							</Column>
+                            <Column id="editAndDeleteColumnId" hAlign="End" importance="High">
+							</Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem 
+                                type="Navigation"
+                                press="onNavToProductDetails">
+                                <cells>
+                                    <ObjectIdentifier title="{Name}" class="sapMTableContentMargin" />
+									<ObjectNumber number="{Price}" unit="USD"/>
+									<Text text="{Specs}" wrapping="false" class="sapMSampleTextMaxLinesText"/>
+									<Text text="{SupplierInfo}" wrapping="false" class="sapMSampleTextMaxLinesText"/>
+									<Text text="{MadeIn}" />
+									<Text text="{ProductionCompanyName}" wrapping="false" class="sapMSampleTextMaxLinesText"/>
+									<RatingIndicator maxValue="5" class="sapUiSmallMarginBottom" value="{Rating}" tooltip="Rating Tooltip" editable="false" />
+									<HBox justifyContent="End">
+										<Button class="sapUiTinyMarginEnd" icon="sap-icon://edit" type="Transparent" press="onOpenEditProductDialog"/>
+										<Button icon="sap-icon://sys-cancel" type="Transparent" press="onOpenDeleteProductConfirmation"/>
+									</HBox>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </content>
+            </IconTabBar>
+        </f:content>
+        <f:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer/>
+                <Button icon="sap-icon://add" text="{i18n>storeDetailsCreateProductButton}" press="onOpenCreateProductDialog"></Button>
+                <Button icon="sap-icon://delete" type="Reject" text="{i18n>storeDetailsDeleteStoreButton}" press="onOpenDeleteStoreConfirmation"></Button>
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

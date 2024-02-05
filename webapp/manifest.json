@@ -1,0 +1,147 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "aliaksei.rakhmanko",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.11.5",
+      "toolsId": "f25c3183-54af-4adb-b193-0434f4afacda"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.120.4",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.suite.ui.generic.template": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "": {
+        "type": "sap.ui.model.odata.v2.ODataModel",
+        "settings": {
+            "serviceUrl": "http://localhost:3000/odata",
+            "useBatch": false,
+            "defaultBindingMode": "TwoWay",
+            "disableHeadRequestForToken": true
+        }
+    },
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "aliaksei.rakhmanko.i18n.i18n",
+          "bundleLocale": "en",
+          "supportedLocales": ["en", "ru"],
+          "fallbackLocale": "en"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "aliaksei.rakhmanko.view",
+        "controlAggregation": "pages",
+        "controlId": "RootApp",
+        "bypassed": {
+          "target": [
+              "notFound"
+          ]
+        }
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "StoresOverview",
+          "target": [
+              "storesOverview"
+          ]
+        },
+        {
+          "pattern": "storeDetails/{storeId}",
+          "name": "StoreDetails",
+          "target": [
+              "storeDetails"
+          ]
+        },
+        {
+          "pattern": "storeDetails/{storeId}/productDetails/{productId}",
+          "name": "ProductDetails",
+          "target": [
+              "productDetails"
+          ]
+        }
+      ],
+      "targets": {
+        "storesOverview": {
+          "viewName": "StoresOverview",
+          "viewId": "storesOverview",
+          "viewLevel": 1
+        },
+        "storeDetails": {
+          "viewName": "StoreDetails",
+          "viewId": "storeDetails",
+          "viewLevel": 2
+        },
+        "productDetails": {
+          "viewName": "ProductDetails",
+          "viewId": "productDetails",
+          "viewLevel": 3
+        },
+        "notFound": {
+          "viewName": "NotFound",
+          "viewId": "notFound",
+          "transition": "show"
+      }
+      }
+    },
+    "rootView": {
+      "viewName": "aliaksei.rakhmanko.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "RootApp"
+    }
+  }
+}

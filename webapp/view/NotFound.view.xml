@@ -1,0 +1,17 @@
+<mvc:View
+	controllerName="aliaksei.rakhmanko.controller.NotFound"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+
+	<IllustratedMessage
+		title="{i18n>notFoundTitle}"
+        enableVerticalResponsiveness="true"
+		illustrationType="sapIllus-PageNotFound"
+		id="notFoundPage"
+		description="{i18n>notFoundDescription}">
+        <additionalContent>
+			<Button text="{i18n>notFoundButtonBack}" press="onNavBack"/>
+		</additionalContent>
+	</IllustratedMessage>
+
+</mvc:View>
